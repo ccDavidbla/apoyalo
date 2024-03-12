@@ -1,51 +1,50 @@
-import './App.css';
 import React, { Component } from 'react';
-import PersonCard from './PersonCard';
 
-class App extends Component {
+class CardPerson extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      persons: [
+        {
+          age: 45,
+          hairColor: "black",
+          firstName: "Jane Doe"
+        },
+        {
+          age: 88,
+          hairColor: "Brown",
+          firstName: "Smith Jhon"
+        }
+      ]
+    };
+  }
+
+  changeAge = (index) => {
+    const updatePersons = [...this.state.persons];
+    updatePersons[index].age++;
+    this.setState({ persons: updatePersons });
+  }
+
   render() {
-    const personas = [
-      {
-        firstName: 'Jane',
-        lastName: 'Doe',
-        age: 45,
-        hairColor: 'Black',
-      },
-      {
-        firstName: 'John',
-        lastName: 'Smith',
-        age: 88,
-        hairColor: 'Brown',
-      },
-      {
-        firstName: 'Millard',
-        lastName: 'Fillmore',
-        age: 50,
-        hairColor: 'Brown',
-      },
-      {
-        firstName: 'Maria',
-        lastName: 'Smith',
-        age: 62,
-        hairColor: 'Brown',
-      },
-    ];
+    const { persons } = this.state;
 
     return (
-      <div className="container">
-        <h1>Hola Dojo</h1>
-        {personas.map((persona) => (
-          <PersonCard
-            key={persona.firstName}
-            firstName={persona.firstName}
-            lastName={persona.lastName}
-            age={persona.age}
-            hairColor={persona.hairColor}
-          />
+      <div>
+        {persons.map((person, index) => (
+          <div key={index}>
+            <h1>
+              {person.firstName}
+            </h1>
+            <p>Age: {person.age}</p>
+            <p>Hair color: {person.hairColor}</p>
+            <button onClick={() => this.changeAge(index)}>
+              Birthday Button for {person.firstName}
+            </button>
+          </div>
         ))}
       </div>
     );
   }
 }
 
-export default App;
+export default CardPerson;
